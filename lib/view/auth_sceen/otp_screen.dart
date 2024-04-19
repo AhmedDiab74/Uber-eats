@@ -7,6 +7,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
 import 'package:ubereats/utils/colors.dart';
 import 'package:ubereats/utils/textStyles.dart';
+import 'package:ubereats/view/bottom_navigation_bar/bottom_navigation_bar.dart';
 
 class OTPScreen extends StatefulWidget {
   const OTPScreen({super.key});
@@ -42,6 +43,7 @@ class _OTPScreenState extends State<OTPScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // bottomNavigationBar: BottomNavigationBa(),
       floatingActionButton: Stack(
         children: [
           Positioned(

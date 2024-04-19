@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:ubereats/view/auth_sceen/mobile_login_screen.dart';
 import 'package:ubereats/view/auth_sceen/otp_screen.dart';
+import 'package:ubereats/view/bottom_navigation_bar/bottom_navigation_bar.dart';
+import 'package:ubereats/view/browse/browse.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
       return const MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
-          home: OTPScreen());
+          home: BottomNavigationBarUberEats());
     });
   }
 }
