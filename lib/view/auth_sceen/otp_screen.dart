@@ -3,11 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:ubereats/controller/provider/mobile_auth_provider/mobile_auth_provider.dart';
+import 'package:ubereats/controller/services/auth_services/mobile_auth_services.dart';
 import 'package:ubereats/utils/colors.dart';
 import 'package:ubereats/utils/textStyles.dart';
 import 'package:ubereats/view/bottom_navigation_bar/bottom_navigation_bar.dart';
+import 'package:ubereats/view/home/home.dart';
 
 class OTPScreen extends StatefulWidget {
   const OTPScreen({super.key});
@@ -67,7 +72,15 @@ class _OTPScreenState extends State<OTPScreen> {
             right: 10.w,
             bottom: 3.h,
             child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  // MobileAuthServices.verifyOTP(
+                  //     context: context, smsCode: otpController.text.trim());
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: const HomeScreen(),
+                          type: PageTransitionType.leftToRight));
+                },
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),
                   padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 1.h),
@@ -100,7 +113,7 @@ class _OTPScreenState extends State<OTPScreen> {
               height: 2.h,
             ),
             Text(
-              "Enter the 4-digit code sent to you at 05599224612",
+              'Enter the 4-digit code sent to you at ${context.read<MobileAuthProvider>().mobileNumber}',
               style: AppTextStyles.body16,
             ),
             SizedBox(

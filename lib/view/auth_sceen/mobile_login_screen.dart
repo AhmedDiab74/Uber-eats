@@ -2,9 +2,14 @@ import 'package:country_picker/country_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:ubereats/controller/provider/mobile_auth_provider/mobile_auth_provider.dart';
+import 'package:ubereats/controller/services/auth_services/mobile_auth_services.dart';
 import 'package:ubereats/utils/colors.dart';
 import 'package:ubereats/utils/textStyles.dart';
+import 'package:ubereats/view/auth_sceen/otp_screen.dart';
 
 class MobileLoginScreen extends StatefulWidget {
   const MobileLoginScreen({super.key});
@@ -16,6 +21,17 @@ class MobileLoginScreen extends StatefulWidget {
 class _MobileLoginScreenState extends State<MobileLoginScreen> {
   String selectedCountry = "+20";
   TextEditingController mobileController = TextEditingController();
+  bool receiveOTP = false;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        receiveOTP = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,26 +121,45 @@ class _MobileLoginScreenState extends State<MobileLoginScreen> {
           height: 3.h,
         ),
         ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              setState(() {
+                receiveOTP = true;
+              });
+                Navigator.push(
+              context,
+              PageTransition(
+                  child: const OTPScreen(),
+                  type: PageTransitionType.rightToLeft));
+              // context.read<MobileAuthProvider>().updateMobileNumber(
+              //     '$selectedCountry${mobileController.text.trim()}');
+              // MobileAuthServices.receiveOTP(
+              //     context: context,
+              //     phoneNumber:
+              //         '$selectedCountry${mobileController.text.trim()}');
+            },
             style: ElevatedButton.styleFrom(
                 backgroundColor: black, minimumSize: Size(90.w, 6.h)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: 9.w,
-                ),
-                Text(
-                  "Next",
-                  style: AppTextStyles.body16.copyWith(color: white),
-                ),
-                Icon(
-                  Icons.arrow_forward,
-                  color: white,
-                  size: 4.h,
-                )
-              ],
-            )),
+            child: receiveOTP
+                ? CircularProgressIndicator(
+                    color: white,
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: 9.w,
+                      ),
+                      Text(
+                        "Next",
+                        style: AppTextStyles.body16.copyWith(color: white),
+                      ),
+                      Icon(
+                        Icons.arrow_forward,
+                        color: white,
+                        size: 4.h,
+                      )
+                    ],
+                  )),
         SizedBox(
           height: 3.w,
         ),
